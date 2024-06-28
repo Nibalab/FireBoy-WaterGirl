@@ -1,11 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fireboy and Watergirl</title>
+    <link rel="stylesheet" href="styles/style.css" />
+    <style></style>
+  </head>
+  <body>
+    <div id="landing-page">
+      <h1>AquaGuy and BlazeGirl</h1>
+      <button class="button" onclick="startGame()">Play</button>
+      <button class="button" onclick="showInstructions()">Instructions</button>
+    </div>
+    <div id="instructions-page" style="display: none">
+      <h1>Instructions</h1>
+      <p>Use arrow keys to move BlazeGirl and WASD to move AquaGuy.</p>
+      <button class="button" onclick="backToMenu()">Back to Menu</button>
+    </div>
+    <div class="container">
+      <div id="game-container">
+      </div>
+      <button id="back-button" class="button" onclick="backToMenuFromGame()">
+        Back to Menu
+      </button>
+    </div>
+    <script src="node_modules/phaser/dist/phaser.js"></script>
+    <script src="main.js"></script>
+  </body>
 </html>
