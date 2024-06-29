@@ -66,6 +66,7 @@ document.getElementById('landing-page').style.display = 'none';
     document.getElementById('instructions-page').style.display = 'none';
     document.getElementById('game-container').style.display = 'block';
 
+    //set the config of the game
     const config = {
         type: Phaser.AUTO,
         width: 800,
@@ -79,7 +80,7 @@ document.getElementById('landing-page').style.display = 'none';
             }
         }
     };
-
+    // creating a new game, pass the config
     game = new Phaser.Game(config);
   }
 
