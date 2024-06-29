@@ -95,7 +95,7 @@ class Example extends Phaser.Scene {
     }
 }
 
-function startGame() { }
+function startGame() { 
     document.getElementById('landing-page').style.display = 'none';
     document.getElementById('instructions-page').style.display = 'none';
     document.getElementById('game-container').style.display = 'block';
@@ -116,7 +116,7 @@ function startGame() { }
 
     game = new Phaser.Game(config);
 
-
+}
 function showInstructions() {
     document.getElementById('landing-page').style.display = 'none';
     document.getElementById('instructions-page').style.display = 'flex';
