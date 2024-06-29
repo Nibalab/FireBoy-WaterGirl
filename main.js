@@ -1,48 +1,83 @@
 let game;
+let player;
+let platforms;
+let cursors;
 
 class Example extends Phaser.Scene {
-  preload() {
-
+    preload() {
+        this.load.image('character', 'assets/charfire.png'); // Use the resized image
     }
 
     create() {
-      this.createBrickWall();
+        this.createBrickWall();
+        this.createRoads();
 
-      this.createRoads();
+        player = this.physics.add.sprite(40, 550, 'character');
+        player.setBounce(0.2);
+        player.setCollideWorldBounds(true);
 
+        // Add player collision with platforms
+        this.physics.add.collider(player, platforms);
+
+        // Create cursor keys input
+        cursors = this.input.keyboard.createCursorKeys();
+    }
+
+    update() {
+        if (cursors.left.isDown) {
+            player.setVelocityX(-160); // Move left
+        } else if (cursors.right.isDown) {
+            player.setVelocityX(160); // Move right
+        } else {
+            player.setVelocityX(0); // Stop
+        }
+
+        // Allow the player to jump if they are touching the ground
+        if (cursors.up.isDown && player.body.touching.down) {
+            player.setVelocityY(-230); // Jump
+        }
     }
 
     createRoads() {
-      const graphics = this.add.graphics();
-      graphics.fillStyle(0xA9A9A9, 1); // Dark gray color for the road/platforms
+        platforms = this.physics.add.staticGroup(); // Create a static group for the platforms
 
-      // Define the road/platform positions and sizes
-      const platforms = [
-          { x: 0, y: 580, width: 900, height: 20 },
-          { x: 700, y: 542, width: 100, height: 40 },
-          { x: 0, y: 500, width: 180, height: 20 },
-          { x: 0, y: 400, width: 500, height: 40 },
-          { x: 470, y: 440, width: 100, height: 40 },
-          { x: 540, y: 480, width: 100, height: 40 },
-          { x: 100, y: 300, width: 850, height: 40 },
-          { x: 0, y: 200, width: 700, height: 40 },
-          { x: 100, y: 100, width: 700, height: 50 },
-      ];
+        // Define the road/platform positions and sizes
+        const platformData = [
+            { x: 0, y: 580, width: 900, height: 20 },
+            { x: 700, y: 542, width: 100, height: 40 },
+            { x: 0, y: 500, width: 180, height: 20 },
+            { x: 0, y: 400, width: 500, height: 30 },
+            { x: 470, y: 440, width: 100, height: 30 },
+          { x: 540, y: 480, width: 100, height: 30 },
+          { x: 0, y: 340, width: 50, height: 20 },
 
-      // Draw the road/platforms
-      platforms.forEach(platform => {
-          graphics.fillRect(platform.x, platform.y, platform.width, platform.height);
-      });
+          { x: 100, y: 300, width: 850, height: 30 },
+          { x: 750, y: 240, width: 50, height: 20 },
 
-      // Draw the exit doors
-      graphics.fillStyle(0x696969, 1); // Dim gray color for the doors
-      graphics.fillRect(650, 50, 30, 50); // Male exit
-      graphics.fillRect(700, 50, 30, 50); // Female exit
+          { x: 0, y: 200, width: 700, height: 30 },
+          { x: 0, y: 140, width: 50, height: 20 },
 
-      // Add symbols to the doors
-      this.add.text(660, 60, '♂', { fontSize: '20px', fill: '#FFFFFF' });
-      this.add.text(710, 60, '♀', { fontSize: '20px', fill: '#FFFFFF' });
-  }
+            { x: 100, y: 100, width: 700, height: 30 },
+        ];
+
+        // Create the road/platforms
+        platformData.forEach(platform => {
+            let plat = this.add.rectangle(platform.x + platform.width / 2, platform.y + platform.height / 2, platform.width, platform.height, 0xA9A9A9);
+            this.physics.add.existing(plat, true); // Add physics to the platform
+            platforms.add(plat);
+        });
+
+        // Draw the exit doors
+        const graphics = this.add.graphics();
+        graphics.fillStyle(0x696969, 1); // Dim gray color for the doors
+        graphics.fillRect(650, 50, 30, 50); // Male exit
+        graphics.fillRect(700, 50, 30, 50); // Female exit
+
+        // Add symbols to the doors
+        this.add.text(660, 60, '♂', { fontSize: '20px', fill: '#FFFFFF' });
+        this.add.text(710, 60, '♀', { fontSize: '20px', fill: '#FFFFFF' });
+    }
+
     createBrickWall() {
         const brickWidth = 50;
         const brickHeight = 25;
@@ -60,9 +95,8 @@ class Example extends Phaser.Scene {
     }
 }
 
-function startGame() {
-
-document.getElementById('landing-page').style.display = 'none';
+function startGame() { }
+    document.getElementById('landing-page').style.display = 'none';
     document.getElementById('instructions-page').style.display = 'none';
     document.getElementById('game-container').style.display = 'block';
 
@@ -76,13 +110,13 @@ document.getElementById('landing-page').style.display = 'none';
         physics: {
             default: 'arcade',
             arcade: {
-                gravity: { y: 200 }
+                gravity: { y: 300 } // Increase gravity for better jumping feel
             }
         }
     };
     // creating a new game, pass the config
     game = new Phaser.Game(config);
-  }
+
 
 function showInstructions() {
     document.getElementById('landing-page').style.display = 'none';
@@ -96,9 +130,13 @@ function backToMenu() {
     if (game) {
         game.destroy(true);
     }
-}
+    // Move right
+    else if (cursors.right.isDown) {
+      player.setVelocityX(160);
+    }
 
-function backToMenuFromGame() {
-    backToMenu();
-    game.destroy(true);
-}
+    // Jump
+    if (cursors.up.isDown && player.body.touching.down) {
+      player.setVelocityY(-330);
+    }
+  }
