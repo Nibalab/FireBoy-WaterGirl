@@ -16,17 +16,7 @@ body {
   top: 0;
   left: 0;
 }
-.container{
-  display: flex;
-  border: 1px black solid;
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
 
-}
 
 .button {
   padding: 10px 20px;
