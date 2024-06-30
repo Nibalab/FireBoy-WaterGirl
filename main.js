@@ -18,6 +18,7 @@ class Example extends Phaser.Scene {
         player.setCollideWorldBounds(true);
 
         // Add player collision with platforms
+        
         this.physics.add.collider(player, platforms);
 
         // Create cursor keys input
