@@ -107,7 +107,7 @@ class Level1 extends Phaser.Scene {
 
   handleLose(player, losingArea) {
     // Handle what happens when the player loses
-    backToMenu();
+    backToLevels();
   }
 
   createBrickWall() {
