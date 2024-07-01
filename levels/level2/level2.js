@@ -11,7 +11,11 @@ let scoreText;
 let player2Score = 0;
 let player2ScoreText;
 let player1ScoreText;
-let player1Score=0;
+let player1Score = 0;
+let player1DoorZone;
+let player2DoorZone;
+let player1ReachedDoor = false;
+let player2ReachedDoor = false;
 
 class Level2 extends Phaser.Scene {
   constructor() {
@@ -63,43 +67,55 @@ class Level2 extends Phaser.Scene {
     this.createPlayer2Collectibles();
 
     // Add score text
-    scoreText = this.add.text(0, 0, 'Score: 0', { fontSize: '25px', fill: '#000' , fontStyle: 'bold'});
+    scoreText = this.add.text(0, 0, 'Score: 0', { fontSize: '25px', fill: '#000', fontStyle: 'bold' });
     player1ScoreText = this.add.text(250, 0, 'Player1 Score: 0', { fontSize: '25px', fill: '#000', fontStyle: 'bold' });
     player2ScoreText = this.add.text(550, 0, 'Player2 Score: 0', { fontSize: '25px', fill: '#000', fontStyle: 'bold' });
 
     // Set up overlap between players and collectibles
     this.physics.add.overlap(player, collectibles, this.collectCollectible, null, this);
-   
-
-    // Set up overlap between player2 and player2 collectibles
     this.physics.add.overlap(player2, player2Collectibles, this.collectPlayer2Collectible, null, this);
+
+    // Create door zones
+    this.createDoorZones();
+
+    // Set up overlap between players and door zones
+    this.physics.add.overlap(player, player1DoorZone, this.reachDoor1, null, this);
+    this.physics.add.overlap(player2, player2DoorZone, this.reachDoor2, null, this);
   }
 
   update() {
-    // Control for the first player
-    if (cursors.left.isDown) {
-      player.setVelocityX(-160); // Move left
-    } else if (cursors.right.isDown) {
-      player.setVelocityX(160); // Move right
+    if (!player1ReachedDoor) {
+      // Control for the first player
+      if (cursors.left.isDown) {
+        player.setVelocityX(-160); // Move left
+      } else if (cursors.right.isDown) {
+        player.setVelocityX(160); // Move right
+      } else {
+        player.setVelocityX(0); // Stop
+      }
+
+      if (cursors.up.isDown && player.body.touching.down) {
+        player.setVelocityY(-230); // Jump
+      }
     } else {
       player.setVelocityX(0); // Stop
     }
 
-    if (cursors.up.isDown && player.body.touching.down) {
-      player.setVelocityY(-230); // Jump
-    }
+    if (!player2ReachedDoor) {
+      // Control for the second player
+      if (wad.left.isDown) {
+        player2.setVelocityX(-160); // Move left
+      } else if (wad.right.isDown) {
+        player2.setVelocityX(160); // Move right
+      } else {
+        player2.setVelocityX(0); // Stop
+      }
 
-    // Control for the second player
-    if (wad.left.isDown) {
-      player2.setVelocityX(-160); // Move left
-    } else if (wad.right.isDown) {
-      player2.setVelocityX(160); // Move right
+      if (wad.up.isDown && player2.body.touching.down) {
+        player2.setVelocityY(-230); // Jump
+      }
     } else {
       player2.setVelocityX(0); // Stop
-    }
-
-    if (wad.up.isDown && player2.body.touching.down) {
-      player2.setVelocityY(-230); // Jump
     }
 
     // Check for collision with the losing area
@@ -178,7 +194,7 @@ class Level2 extends Phaser.Scene {
 
     for (let y = 0; y < wallHeight; y += brickHeight) {
       for (let x = 0; x < wallWidth; x += brickWidth) {
-        graphics.fillRect(x, y, brickWidth - 2, brickHeight - 2); // Slight gap for a more realistic look
+        graphics.fillRect(x, y, brickWidth - 2, brickHeight - 2); // Adding a small gap between bricks
       }
     }
   }
@@ -219,12 +235,61 @@ class Level2 extends Phaser.Scene {
     });
   }
 
+  createDoorZones() {
+    // Create zones for player1 and player2 doors
+    player1DoorZone = this.add.zone(30, 70).setSize(40, 60);
+    player2DoorZone = this.add.zone(120, 70).setSize(40, 60);
+
+    this.physics.world.enable(player1DoorZone);
+    this.physics.world.enable(player2DoorZone);
+
+    player1DoorZone.body.setAllowGravity(false);
+    player2DoorZone.body.setAllowGravity(false);
+  }
+
+  reachDoor1(player, doorZone) {
+    player1ReachedDoor = true;
+    player.setVelocity(0); // Stop player
+    player.setTint(0x00ff00); // Optional: change player color to indicate door reached
+    this.checkWinCondition();
+  }
+
+  reachDoor2(player2, doorZone) {
+    player2ReachedDoor = true;
+    player2.setVelocity(0); // Stop player2
+    player2.setTint(0x00ff00); // Optional: change player2 color to indicate door reached
+    this.checkWinCondition();
+  }
+
+  checkWinCondition() {
+    if (player1ReachedDoor || player2ReachedDoor) {
+      this.winGame();
+    }
+  }
+
+  winGame() {
+    this.add.text(250, 250, 'You Win!', { fontSize: '64px', fill: '#1219E3', fontStyle: 'bold' });
+
+    // Display a link to the next level
+    const nextLevelText = this.add.text(150, 320, 'Continue to the :Next Level', {
+      fontSize: '32px',
+      fill: '#E31D12',
+      fontStyle: 'bold'
+    });
+    nextLevelText.setInteractive({ useHandCursor: true });
+    nextLevelText.on('pointerdown', () => {
+      window.location.href = '/levels/level3/level3.js'; // Update with the actual path to the next level
+    });
+
+    // Optionally, you can add more win logic here, such as moving to the next level
+  }
+
   collectCollectible(player, collectible) {
     collectible.disableBody(true, true);
 
     // Add to score
     score += 1;
-    player1Score+=1;
+    player1Score += 1;
     player1ScoreText.setText('Player1 Score: ' + player1Score);
     scoreText.setText('Score: ' + score);
   }
