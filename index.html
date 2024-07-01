@@ -1,36 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>BlazeBoy and AquaGirl</title>
-    <link rel="stylesheet" href="styles/style.css" />
-</head>
+    <link rel="stylesheet" href="Styles/style.css" />
+    <style></style>
+  </head>
   <body>
-
     <div id="landing-page">
-        <div class="game-name">
-            <p class="blaze-boy">BlazeBoy</p>
-            <p class="vs"><span class="v">V</span><span class="space"></span><span class="s">S</span></p>
-            <p class="aqua-girl">AquaGirl</p>
-        </div>
-        <button class="button" onclick="startGame()">Play</button>
-        <button class="button" onclick="showInstructions()">Instructions</button>
+      <h1>BlazeBoy and AquaGirl</h1>
+      <button class="button" onclick="startGame()">Play</button>
+      <button class="button" onclick="showInstructions()">Instructions</button>
     </div>
-
     <div id="instructions-page" style="display: none">
-        <h1>Instructions</h1>
-        <p>Use arrow keys to move BlazeGirl and WASD to move AquaGuy.</p>
-     <button class="button" onclick="backToMenu()">Back to Menu</button> 
+      <h1>Instructions</h1>
+      <p>Use arrow keys to move BlazeGirl and WASD to move AquaGuy.</p>
+      <button class="button" onclick="backToMenu()">Back to Menu</button>
     </div>
-
     <div class="container">
-        <div id="game-container">
-        </div>
-        <button id="back-button" class="button" onclick="backToMenu()">Back to Menu</button>
+      <div id="game-container">
+      </div>
+      <button id="back-button" class="button" onclick="backToMenu()">
+        Back to Menu
+      </button>
     </div>
-
     <script src="node_modules/phaser/dist/phaser.js"></script>
     <script src="main.js"></script>
-</body>
+  </body>
 </html>
