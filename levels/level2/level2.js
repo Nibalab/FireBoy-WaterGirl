@@ -113,6 +113,7 @@ class Level2 extends Phaser.Scene {
     // Define the road/platform positions and sizes
     const platformData = [
       { x: 0, y: 580, width: 320, height: 20 }, // ground start
+      { x: 0, y: 580, width: 320, height: 20 },
       { x: 410, y: 580, width: 550, height: 20 }, // after the red ground
       { x: 700, y: 542, width: 100, height: 40 }, // the block on the right
       { x: 730, y: 490, width: 70, height: 100 },
