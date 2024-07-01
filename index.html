@@ -7,17 +7,29 @@
     <link rel="stylesheet" href="styles/style.css" />
   </head>
   <body>
-    <div id="landing-page">
-      <h1>BlazeBoy and AquaGirl</h1>
-      <button class="button" onclick="startLevel('levels/maps/maps.html')">
-        Play
-      </button>
-      <button class="button" onclick="showInstructions()">Instructions</button>
-    </div>
-    <div id="instructions-page" style="display: none">
-      <h1>Instructions</h1>
-      <p>Use arrow keys to move BlazeGirl and WASD to move AquaGuy.</p>
-      <button class="button" onclick="backToMenu()">Back to Menu</button>
+    <section>
+      <img src="assets/images/stars.png" id="stars" alt="stars" />
+      <img src="assets/images/moon.png" id="moon" alt="moon" />
+      <img src="assets/images/mountains_behind.png" id="mountains_behind" />
+      <h2 id="text">GlazeBoy AquaGirl</h2>
+      <div class="flex-column">
+
+
+        <a href="levels/maps/maps.html" class="button" id="btn">Play</a>
+
+        <a href="#sec" class="button" id="btn">Instructions</a>
+      </div>
+
+      <img src="assets/images/mountains_front.png" id="mountains_front" />
+    </section>
+    <div class="sec" id="sec">
+
+      <h2>Instusctions</h2>
+      <p>
+        Use arrow keys to move BlazeGirl and WASD to move AquaGuy.
+        <br />
+
+
     </div>
 
     <script src="node_modules/phaser/dist/phaser.js"></script>
