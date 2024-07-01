@@ -4,6 +4,8 @@ let platforms;
 let cursors;
 let wad;
 let losingArea;
+let losingAreaPlayer1;
+let losingAreaPlayer2;
 let collectibles;
 let player2Collectibles;
 let score = 0;
@@ -58,7 +60,7 @@ class Level2 extends Phaser.Scene {
     };
 
     // Create the losing area
-    this.createLosingArea();
+    this.createLosingAreas();
 
     // Create collectibles
     this.createCollectibles();
@@ -118,9 +120,11 @@ class Level2 extends Phaser.Scene {
       player2.setVelocityX(0); // Stop
     }
 
-    // Check for collision with the losing area
+    // Check for collision with the losing areas
     this.physics.add.overlap(player, losingArea, this.handleLose, null, this);
     this.physics.add.overlap(player2, losingArea, this.handleLose, null, this);
+    this.physics.add.overlap(player, losingAreaPlayer1, this.handleLosePlayer1, null, this);
+    this.physics.add.overlap(player2, losingAreaPlayer2, this.handleLosePlayer2, null, this);
   }
 
   createRoads() {
@@ -172,14 +176,36 @@ class Level2 extends Phaser.Scene {
     this.add.text(110, 60, '♀', { fontSize: '28px', fill: '#FFFFFF' });
   }
 
-  createLosingArea() {
-    // Create a losing area (e.g., a red zone at the bottom of the screen)
-    losingArea = this.add.rectangle(365, 595, 90, 15, 0xff0000);
+  createLosingAreas() {
+    // Create a general losing area
+    losingArea = this.add.rectangle(365, 595, 90, 15, 0x000000);
     this.physics.add.existing(losingArea, true); // Add physics to the losing area
+
+    // Create losing area for player1
+    losingAreaPlayer1 = this.add.rectangle(200, 280, 5, 80, 0x0000FF); // Position and size accordingly
+    this.physics.add.existing(losingAreaPlayer1, true);
+
+    // Create losing area for player2
+    losingAreaPlayer2 = this.add.rectangle(200, 180, 5, 100, 0xff0000); // Position and size accordingly
+    this.physics.add.existing(losingAreaPlayer2, true);
   }
 
   handleLose(player, losingArea) {
-    // Handle what happens when the player loses
+    // Handle what happens when either player loses in the general losing area
+    backToLevels();
+  }
+  handleLose(player2, losingArea) {
+    // Handle what happens when either player loses in the general losing area
+    backToLevels();
+  }
+
+  handleLosePlayer1(player, losingAreaPlayer1) {
+    // Handle what happens when player1 loses in their specific losing area
+    backToLevels();
+  }
+
+  handleLosePlayer2(player2, losingAreaPlayer2) {
+    // Handle what happens when player2 loses in their specific losing area
     backToLevels();
   }
 
@@ -262,7 +288,7 @@ class Level2 extends Phaser.Scene {
   }
 
   checkWinCondition() {
-    if (player1ReachedDoor || player2ReachedDoor) {
+    if (player1ReachedDoor && player2ReachedDoor) {
       this.winGame();
     }
   }
