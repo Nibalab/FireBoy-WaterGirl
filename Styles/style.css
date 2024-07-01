@@ -1,138 +1,149 @@
-*{
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-family: "Poppins", sans-serif;
+  font-size: 16px;
   scroll-behavior: smooth;
 }
 
-::-webkit-scrollbar{
-  height: .1rem;
-  width: .5rem
-}
-
-::-webkit-scrollbar-thumb{
-  background-color: #194eb9;
-  border-radius: 5rem;
-}
-
-
 body {
-  margin: 0;
-  padding: 0;
+  background: linear-gradient(#2b1055, #7597de);
+  min-height: 100vh;
   overflow-x: hidden;
-  font-family: Arial, sans-serif;
-  background: #4b0000;
-  color: #ffff
-  ;
 }
 
-
-.game-name {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-}
-
-.game-name p {
-  margin: 0;
-  font-family: 'Poppins', sans-serif;
-  font-size: 3em;
-  text-transform: uppercase;
-}
-
-.blaze-boy {
-  color: #ff4500;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-}
-
-.aqua-girl {
-  color: #1e90ff;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-}
-
-.vs {
-  display: flex;
-  align-items: center;
-  gap: 0.1em;
-  font-style: italic;
-  font-weight: 700;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-}
-
-.v {
-  color: #1e90ff;
-}
-
-.s {
-  color: #ff4500;
-}
-
-#landing-page, #instructions-page {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100vw;
-  height: 100vh;
-  /* background-color: rgba(240, 240, 240, 0.8); Added transparency */
+header {
   position: absolute;
   top: 0;
   left: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 30px 100px;
+  z-index: 99;
 }
 
-.container {
+header .logo {
+  color: #fff;
+  font-weight: 700;
+  text-decoration: none;
+  font-size: 2rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+header ul {
   display: flex;
-  /* border: 1px black solid; */
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
 }
 
-.button {
-  box-shadow: 0 0 1rem #12f7ff;
-  padding: 10px 20px;
-  margin: 10px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  transition: all .3s ease;
-  cursor: pointer;
+header ul li {
+  list-style: none;
+  margin-left: 20px;
 }
 
-.button:hover {
-  box-shadow: 0 0 1rem #12f7ff;
-  background-color: #0056b3;
+header ul li a {
+  text-decoration: none;
+  padding: 6px 15px;
+  color: #ffff;
+  border-radius: 20px;
 }
 
-/* .parallax-home {
-  /* The image used */
-  /* background-image: url('../assets/images/image.jpg'); */
+header ul li a:hover,
+.active {
+  background: #fff;
+  color: #2b1055;
+}
 
-  /* Set a specific height */
-  /* height: 100vh; Full screen height */
+section {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  width: 100%;
+  height: 100vh;
+  padding: 100px;
+}
 
-  /* Create the parallax scrolling effect */
-  /* background-attachment: fixed;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover; */
+section::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 100px;
+  background: linear-gradient(to top, #1c0522, transparent);
+  z-index: 999999;
+}
 
-  /* Ensure it is behind other content */
-  /* position: fixed;
+section img {
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
-  z-index: -100; Places it behind other content */
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+}
 
-  /* Enhance image quality */
-  /* -webkit-backface-visibility: hidden;
-  -moz-backface-visibility: hidden;
-  -webkit-transform: translateZ(0);
-  -moz-transform: translateZ(0);
-  -ms-transform: translateZ(0);
-  -o-transform: translateZ(0);
-  transform: translateZ(0);
-} */
+section img#moon {
+  mix-blend-mode: screen;
+}
+section img#moon {
+  mix-blend-mode: screen;
+}
+
+section img#mountains_front {
+  z-index: 10;
+}
+
+#text {
+  position: absolute;
+  right: -350px;
+  color: #fff;
+  white-space: nowrap;
+  font-size: 7.5vw;
+  z-index: 9;
+}
+
+#btn {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  padding: 8px 30px;
+  border-radius: 40px;
+  background-color: #fff;
+  color: #2b1055;
+  font-size: 1.5em;
+  z-index: 9;
+  transform: translateY(100px);
+}
+.buttun{
+  display: flex;
+  flex-direction: column;
+  
+}
+.sec {
+  position: relative;
+  padding: 100px;
+  background: #1c0522;
+}
+
+.sec h2 {
+  font-size: 3.5em;
+  margin-bottom: 10px;
+  color: #fff;
+}
+
+.sec p {
+  font-size: 1em;
+  color: #fff;
+}
