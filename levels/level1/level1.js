@@ -11,14 +11,23 @@ class Level1 extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image('character', '../../assets/charfire.png'); // Ensure this path is correct
+    let drawing1 = localStorage.getItem('character1');
+    let drawing2 = localStorage.getItem('character2');
+
+    if (drawing1) {
+        this.load.image('character1', drawing1);
+    }
+    if (drawing2) {
+        this.load.image('character2', drawing2);
+    }
+    // this.load.image('character', '../../assets/charfire.png'); // Ensure this path is correct
   }
 
   create() {
     this.createBrickWall();
     this.createRoads();
 
-    player = this.physics.add.sprite(40, 550, 'character');
+    player = this.physics.add.sprite(40, 550, 'character1');
     player.setBounce(0.2);
     player.setCollideWorldBounds(true);
 

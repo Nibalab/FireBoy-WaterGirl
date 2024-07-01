@@ -2,6 +2,18 @@ function startLevel(levelUrl) {
   window.location.href = levelUrl;
 }
 
+function startGame() {
+    let character1 = localStorage.getItem('character1')
+    let character2 = localStorage.getItem('character2')
+
+    if (character1 && character2) {
+        window.location.href = 'levels/maps/maps.html'
+    } else {
+        window.location.href = 'levels/drawCharacters/draw.html'
+
+    }
+}
+
 function showInstructions() {
   document.getElementById('landing-page').style.display = 'none';
   document.getElementById('instructions-page').style.display = 'flex';
