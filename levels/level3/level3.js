@@ -125,6 +125,51 @@ class level3 extends Phaser.Scene {
     this.physics.add.overlap(player, losingAreaPlayer1, this.handleLosePlayer1, null, this);
     this.physics.add.overlap(player2, losingAreaPlayer2, this.handleLosePlayer2, null, this);
   }
+  createRoads() {
+    platforms = this.physics.add.staticGroup(); // Create a static group for the platforms
+
+    // Define the road/platform positions and sizes
+    const platformData = [
+      { x: 0, y: 580, width: 750, height: 20 }, // ground start
+      { x: 410, y: 580, width: 550, height: 20 }, // after the red ground
+      { x: 700, y: 542, width: 100, height: 40 }, // the block on the right
+      { x: 200, y: 510, width: 380, height: 10 }, //  1 
+      { x: 0, y: 430, width: 300, height: 20 }, // 2-1 
+      { x: 500, y: 430, width: 500, height: 20 }, //  2-2 
+      { x: 0, y: 340, width: 50, height: 20 }, // 3-1 
+      { x: 750, y: 340, width: 50, height: 10 }, //3-2
+      { x: 100, y: 300, width: 200, height: 23 }, //  4-1 
+      { x: 400, y: 300, width: 300, height: 23 }, // 4-2
+      { x: 0, y: 230, width: 80, height: 10 }, //5-1 
+      { x: 160, y: 200, width: 50, height: 10 }, //5-2
+      { x: 200, y: 120, width: 700, height: 30 }, // 6
+    ];
+
+    // Create the road/platforms
+    platformData.forEach((platform) => {
+      let plat = this.add.rectangle(
+        platform.x + platform.width / 2,
+        platform.y + platform.height / 2,
+        platform.width,
+        platform.height,
+        0xa9a9a9
+      );
+      this.physics.add.existing(plat, true); // Add physics to the platform
+      platforms.add(plat);
+    });
+
+    // Draw the exit doors
+    const graphicsmale = this.add.graphics();
+    const graphicsfemale = this.add.graphics();
+    graphicsfemale.fillStyle(0x1219e3, 1);
+    graphicsmale.fillStyle(0xe31d12, 1); // Dim gray color for the doors
+    graphicsmale.fillRect(750, 60, 40, 60); // Male exit
+    graphicsfemale.fillRect(660, 60, 40, 60); // Female exit
+
+    // Add symbols to the doors
+    this.add.text(763, 60, '♂', { fontSize: '28px', fill: '#FFFFFF' });
+    this.add.text(675, 60, '♀', { fontSize: '28px', fill: '#FFFFFF' });
+  }
 
   
 
