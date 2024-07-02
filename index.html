@@ -1,11 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BlazeBoy and AquaGirl</title>
+    <link rel="stylesheet" href="Styles/style.css" />
+  </head>
+  <body>
+    <section>
+      <img src="assets/images/stars.png" id="stars" alt="stars" />
+      <img src="assets/images/moon.png" id="moon" alt="moon" />
+      <img src="assets/images/mountains_behind.png" id="mountains_behind" />
+      <h2 id="text">GlazeBoy AquaGirl</h2>
+      <div class="flex-column">
+
+
+        <a   onclick="startGame()" class="button">Play</a>
+
+        <a href="#sec" class="button">Instructions</a>
+      </div>
+
+      <img src="assets/images/mountains_front.png" id="mountains_front" />
+    </section>
+    <div class="sec" id="sec">
+
+      <h2>Instructions</h2>
+      <p>
+        Use arrow keys to move BlazeGirl and WASD to move AquaGuy.
+        <br />
+
+
+    </div>
+
+    <script src="node_modules/phaser/dist/phaser.js"></script>
+    <script src="main.js"></script>
+  </body>
 </html>
