@@ -95,6 +95,7 @@ class Example extends Phaser.Scene {
     }
 }
 
+<<<<<<< HEAD
 function startGame() { }
     document.getElementById('landing-page').style.display = 'none';
     document.getElementById('instructions-page').style.display = 'none';
@@ -116,6 +117,19 @@ function startGame() { }
 
     game = new Phaser.Game(config);
 
+=======
+function startGame() {
+    let character1 = localStorage.getItem('character1')
+    let character2 = localStorage.getItem('character2')
+
+    if (character1 && character2) {
+        window.location.href = 'levels/maps/maps.html'
+    } else {
+        window.location.href = 'levels/drawCharacters/draw.html'
+
+    }
+}
+>>>>>>> a81815a518cdc6cd95520feb00abe483b48a92bc
 
 function showInstructions() {
   document.getElementById('landing-page').style.display = 'none';
