@@ -170,6 +170,87 @@ class level3 extends Phaser.Scene {
     this.add.text(763, 60, '♂', { fontSize: '28px', fill: '#FFFFFF' });
     this.add.text(675, 60, '♀', { fontSize: '28px', fill: '#FFFFFF' });
   }
+  createLosingAreas() {
+    // Create a general losing area
+    losingArea = this.add.rectangle(550, 300, 100, 23, 0x000000);
+    this.physics.add.existing(losingArea, true); // Add physics to the losing area
+
+    // Create losing area for player1
+    losingAreaPlayer1 = this.add.rectangle(230, 480, 5, 80, 0x0000FF); // Position and size accordingly
+    this.physics.add.existing(losingAreaPlayer1, true);
+
+    // Create losing area for player2
+    losingAreaPlayer2 = this.add.rectangle(530 , 380, 5, 130, 0xff0000); // Position and size accordingly
+    this.physics.add.existing(losingAreaPlayer2, true);
+  }
+
+  handleLose(player, losingArea) {
+    // Handle what happens when either player loses in the general losing area
+    backToLevels();
+  }
+  
+  handleLosePlayer1(player, losingAreaPlayer1) {
+    // Handle what happens when player1 loses in their specific losing area
+    backToLevels();
+  }
+
+  handleLosePlayer2(player2, losingAreaPlayer2) {
+    // Handle what happens when player2 loses in their specific losing area
+    backToLevels();
+  }
+
+  createBrickWall() {
+    const brickWidth = 50;
+    const brickHeight = 25;
+    const wallWidth = this.scale.width;
+    const wallHeight = this.scale.height;
+
+    const graphics = this.add.graphics();
+    graphics.fillStyle(0xffd089, 1); // Brown color for the bricks
+
+    for (let y = 0; y < wallHeight; y += brickHeight) {
+      for (let x = 0; x < wallWidth; x += brickWidth) {
+        graphics.fillRect(x, y, brickWidth - 2, brickHeight - 2); // Adding a small gap between bricks
+      }
+    }
+  }
+
+  createCollectibles() {
+    collectibles = this.physics.add.staticGroup(); // Create a static group for collectibles
+
+    // Define the positions for the collectibles
+    const collectibleData = [
+      { x: 200, y: 550 },
+      { x: 300, y: 200 },
+      { x: 550, y: 390 },
+      { x: 400, y: 80 },
+    ];
+
+    // Create collectibles at the specified positions
+    collectibleData.forEach((data) => {
+      let collectible = collectibles.create(data.x, data.y, 'collectible');
+      collectible.setScale(0.5); // Adjust scale if necessary
+    });
+  }
+
+  createPlayer2Collectibles() {
+    player2Collectibles = this.physics.add.staticGroup(); // Create a static group for player2 collectibles
+
+    // Define the positions for the player2 collectibles
+    const player2CollectibleData = [
+      { x: 400, y: 500 },
+      { x: 150, y: 390 },
+      { x: 560, y: 80 },
+      { x: 500, y: 200 },
+    ];
+
+    // Create player2 collectibles at the specified positions
+    player2CollectibleData.forEach((data) => {
+      let player2Collectible = player2Collectibles.create(data.x, data.y, 'player2Collectible');
+      player2Collectible.setScale(0.5); // Adjust scale if necessary
+    });
+  }
+
 
   
 
