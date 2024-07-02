@@ -249,9 +249,109 @@ class level3 extends Phaser.Scene {
       let player2Collectible = player2Collectibles.create(data.x, data.y, 'player2Collectible');
       player2Collectible.setScale(0.5); // Adjust scale if necessary
     });
+    
   }
+  createDoorZones() {
+    // Create zones for player1 and player2 doors
+    player1DoorZone = this.add.zone(800, 60.40, 60);
+    player2DoorZone = this.add.zone(700, 60.30, 60);
+
+    this.physics.world.enable(player1DoorZone);
+    this.physics.world.enable(player2DoorZone);
+
+    player1DoorZone.body.setAllowGravity(false);
+    player2DoorZone.body.setAllowGravity(false);
+  }
+
+  
+  reachDoor1(player, doorZone) {
+    if (Phaser.Geom.Rectangle.ContainsPoint(player1DoorZone.getBounds(), player)) {
+      player1ReachedDoor = true;
+      player.setVelocity(0); // Stop player
+      player.setTint(0x00ff00); // Optional: change player color to indicate door reached
+      this.checkWinCondition();
+    }
+  }
+  
+  reachDoor2(player2, doorZone) {
+    if (Phaser.Geom.Rectangle.ContainsPoint(player2DoorZone.getBounds(), player2)) {
+      player2ReachedDoor = true;
+      player2.setVelocity(0); // Stop player2
+      player2.setTint(0x00ff00); // Optional: change player2 color to indicate door reached
+      this.checkWinCondition();
+    }
+  }
+  
+  
+
+  checkWinCondition() {
+    if (player1ReachedDoor && player2ReachedDoor) {
+      this.winGame();
+    }
+  }
+
+  winGame() {
+    this.add.text(250, 250, 'You Win!', { fontSize: '64px', fill: '#1219E3', fontStyle: 'bold' });
+
+    // Display a link to the next level
+    const nextLevelText = this.add.text(150, 320, 'Continue to the :Next Level', {
+      fontSize: '32px',
+      fill: '#E31D12',
+      fontStyle: 'bold'
+    });
+    nextLevelText.setInteractive({ useHandCursor: true });
+    nextLevelText.on('pointerdown', () => {
+      window.location.href = '/levels/level3/level3.js'; // Update with the actual path to the next level
+    });
+
+    // Optionally, you can add more win logic here, such as moving to the next level
+  }
+
+  collectCollectible(player, collectible) {
+    collectible.disableBody(true, true);
+
+    // Add to score
+    score += 1;
+    player1Score += 1;
+    player1ScoreText.setText('Player1 Score: ' + player1Score);
+    scoreText.setText('Score: ' + score);
+  }
+
+  collectPlayer2Collectible(player2, player2Collectible) {
+    player2Collectible.disableBody(true, true);
+
+    // Add to player2 score
+    score += 1;
+    player2Score += 1;
+    player2ScoreText.setText('Player2 Score: ' + player2Score);
+    scoreText.setText('Score: ' + score);
+  }
+}
+
+const config = {
+  type: Phaser.AUTO,
+  width: 800,
+  height: 600,
+  parent: 'game-container',
+  scene: Level2,
+  physics: {
+    default: 'arcade',
+    arcade: {
+      gravity: { y: 300 }, // Increase gravity for better jumping feel
+    },
+  },
+};
+
+const game = new Phaser.Game(config);
+
+function backToLevels() {
+  console.log('trying to log out');
+  window.location.href = '/levels/maps/maps.html';
+  if (game) {
+    game.destroy(true);
+  }
+}
 
 
   
 
-}
