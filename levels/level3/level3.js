@@ -84,4 +84,48 @@ class level3 extends Phaser.Scene {
     this.physics.add.overlap(player, player1DoorZone, this.reachDoor1, null, this);
     this.physics.add.overlap(player2, player2DoorZone, this.reachDoor2, null, this);
   }
+  update() {
+    if (!player1ReachedDoor) {
+      // Control for the first player
+      if (cursors.left.isDown) {
+        player.setVelocityX(-160); // Move left
+      } else if (cursors.right.isDown) {
+        player.setVelocityX(160); // Move right
+      } else {
+        player.setVelocityX(0); // Stop
+      }
+
+      if (cursors.up.isDown && player.body.touching.down) {
+        player.setVelocityY(-230); // Jump
+      }
+    } else {
+      player.setVelocityX(0); // Stop
+    }
+
+    if (!player2ReachedDoor) {
+      // Control for the second player
+      if (wad.left.isDown) {
+        player2.setVelocityX(-160); // Move left
+      } else if (wad.right.isDown) {
+        player2.setVelocityX(160); // Move right
+      } else {
+        player2.setVelocityX(0); // Stop
+      }
+
+      if (wad.up.isDown && player2.body.touching.down) {
+        player2.setVelocityY(-230); // Jump
+      }
+    } else {
+      player2.setVelocityX(0); // Stop
+    }
+
+    // Check for collision with the losing areas
+    this.physics.add.overlap(player, losingArea, this.handleLose, null, this);
+    this.physics.add.overlap(player2, losingArea, this.handleLose, null, this);
+    this.physics.add.overlap(player, losingAreaPlayer1, this.handleLosePlayer1, null, this);
+    this.physics.add.overlap(player2, losingAreaPlayer2, this.handleLosePlayer2, null, this);
+  }
+
+  
+
 }
