@@ -19,16 +19,16 @@ let player2DoorZone;
 let player1ReachedDoor = false;
 let player2ReachedDoor = false;
 
-class level3 extends Phaser.Scene {
+class Level3 extends Phaser.Scene {
   constructor() {
     super('Level3');
   }
 
   preload() {
-    this.load.image('character', '../../assets/charfire.png'); // Ensure this path is correct
-    this.load.image('collectible', '../../assets/fireCollectible.png'); // Load the collectible image
-    this.load.image('player2Collectible', '../../assets/waterCollectible.png'); // Load the player2 collectible image
-    this.load.image('character2', '../../assets/blue_girl_character.png'); // Ensure this path is correct
+    this.load.image('character', '../../assets/charfire.png');
+    this.load.image('collectible', '../../assets/fireCollectible.png');
+    this.load.image('player2Collectible', '../../assets/waterCollectible.png');
+    this.load.image('character2', '../../assets/blue_girl_character.png');
   }
 
   create() {
@@ -84,6 +84,7 @@ class level3 extends Phaser.Scene {
     this.physics.add.overlap(player, player1DoorZone, this.reachDoor1, null, this);
     this.physics.add.overlap(player2, player2DoorZone, this.reachDoor2, null, this);
   }
+
   update() {
     if (!player1ReachedDoor) {
       // Control for the first player
@@ -119,12 +120,13 @@ class level3 extends Phaser.Scene {
       player2.setVelocityX(0); // Stop
     }
 
-    // Check for collision with the losing areas
-    this.physics.add.overlap(player, losingArea, this.handleLose, null, this);
-    this.physics.add.overlap(player2, losingArea, this.handleLose, null, this);
-    this.physics.add.overlap(player, losingAreaPlayer1, this.handleLosePlayer1, null, this);
-    this.physics.add.overlap(player2, losingAreaPlayer2, this.handleLosePlayer2, null, this);
+    // Check for collision with the losing areas (should not be added in update, added in create)
+    // this.physics.add.overlap(player, losingArea, this.handleLose, null, this);
+    // this.physics.add.overlap(player2, losingArea, this.handleLose, null, this);
+    // this.physics.add.overlap(player, losingAreaPlayer1, this.handleLosePlayer1, null, this);
+    // this.physics.add.overlap(player2, losingAreaPlayer2, this.handleLosePlayer2, null, this);
   }
+
   createRoads() {
     platforms = this.physics.add.staticGroup(); // Create a static group for the platforms
 
@@ -170,6 +172,7 @@ class level3 extends Phaser.Scene {
     this.add.text(763, 60, '♂', { fontSize: '28px', fill: '#FFFFFF' });
     this.add.text(675, 60, '♀', { fontSize: '28px', fill: '#FFFFFF' });
   }
+
   createLosingAreas() {
     // Create a general losing area
     losingArea = this.add.rectangle(550, 300, 100, 23, 0x000000);
@@ -249,8 +252,8 @@ class level3 extends Phaser.Scene {
       let player2Collectible = player2Collectibles.create(data.x, data.y, 'player2Collectible');
       player2Collectible.setScale(0.5); // Adjust scale if necessary
     });
-    
   }
+
   createDoorZones() {
     // Create zones for player1 and player2 doors
     player1DoorZone = this.add.zone(800, 60.40, 60);
@@ -263,7 +266,6 @@ class level3 extends Phaser.Scene {
     player2DoorZone.body.setAllowGravity(false);
   }
 
-  
   reachDoor1(player, doorZone) {
     if (Phaser.Geom.Rectangle.ContainsPoint(player1DoorZone.getBounds(), player)) {
       player1ReachedDoor = true;
@@ -281,8 +283,6 @@ class level3 extends Phaser.Scene {
       this.checkWinCondition();
     }
   }
-  
-  
 
   checkWinCondition() {
     if (player1ReachedDoor && player2ReachedDoor) {
@@ -294,7 +294,7 @@ class level3 extends Phaser.Scene {
     this.add.text(250, 250, 'You Win!', { fontSize: '64px', fill: '#1219E3', fontStyle: 'bold' });
 
     // Display a link to the next level
-    const nextLevelText = this.add.text(150, 320, 'Continue to the :Next Level', {
+    const nextLevelText = this.add.text(150, 320, 'Continue to the Next Level', {
       fontSize: '32px',
       fill: '#E31D12',
       fontStyle: 'bold'
@@ -333,7 +333,7 @@ const config = {
   width: 800,
   height: 600,
   parent: 'game-container',
-  scene: Level2,
+  scene: Level3,
   physics: {
     default: 'arcade',
     arcade: {
@@ -351,7 +351,3 @@ function backToLevels() {
     game.destroy(true);
   }
 }
-
-
-  
-
