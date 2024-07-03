@@ -25,18 +25,27 @@ class Level2 extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image('character', '../../assets/charfire.png'); // Ensure this path is correct
-    this.load.image('collectible', '../../assets/fireCollectible.png'); // Load the collectible image
-    this.load.image('player2Collectible', '../../assets/waterCollectible.png'); // Load the player2 collectible image
-    this.load.image('character2', '../../assets/blue_girl_character.png'); // Ensure this path is correct
+    let drawing1 = localStorage.getItem('character1');
+    let drawing2 = localStorage.getItem('character2');
+  
+    if (drawing1) {
+      this.load.image('character1', drawing1);
+    }
+    if (drawing2) {
+      this.load.image('character2', drawing2);
+    }
+    this.load.image('collectible', '../../assets/fireCollectible.png');
+    this.load.image('player2Collectible', '../../assets/waterCollectible.png');
+    this.load.image('button', '../../assets/blue_girl_character.png'); // Add this line to load the button image
   }
+  
 
   create() {
     this.createBrickWall();
     this.createRoads();
 
     // First Character
-    player = this.physics.add.sprite(40, 550, 'character');
+    player = this.physics.add.sprite(40, 550, 'character1');
     player.setBounce(0.2);
     player.setCollideWorldBounds(true);
 
@@ -45,6 +54,7 @@ class Level2 extends Phaser.Scene {
     player2.setBounce(0.2);
     player2.setCollideWorldBounds(true);
 
+    
     // Add player collision with platforms
     this.physics.add.collider(player, platforms);
     this.physics.add.collider(player2, platforms);
@@ -70,8 +80,8 @@ class Level2 extends Phaser.Scene {
 
     // Add score text
     scoreText = this.add.text(0, 0, 'Score: 0', { fontSize: '25px', fill: '#000', fontStyle: 'bold' });
-    player1ScoreText = this.add.text(250, 0, 'Player1 Score: 0', { fontSize: '25px', fill: '#000', fontStyle: 'bold' });
-    player2ScoreText = this.add.text(550, 0, 'Player2 Score: 0', { fontSize: '25px', fill: '#000', fontStyle: 'bold' });
+    player1ScoreText = this.add.text(230, 0, 'BlazeBoy Score: 0', { fontSize: '25px', fill: '#E31D12', fontStyle: 'bold' });
+    player2ScoreText = this.add.text(520, 0, 'WaterGirl Score: 0', { fontSize: '25px', fill: '#1219E3', fontStyle: 'bold' });
 
     // Set up overlap between players and collectibles
     this.physics.add.overlap(player, collectibles, this.collectCollectible, null, this);
@@ -83,6 +93,7 @@ class Level2 extends Phaser.Scene {
     // Set up overlap between players and door zones
     this.physics.add.overlap(player, player1DoorZone, this.reachDoor1, null, this);
     this.physics.add.overlap(player2, player2DoorZone, this.reachDoor2, null, this);
+    
   }
 
   update() {
@@ -304,7 +315,7 @@ class Level2 extends Phaser.Scene {
     });
     nextLevelText.setInteractive({ useHandCursor: true });
     nextLevelText.on('pointerdown', () => {
-      window.location.href = '/levels/level3/level3.js'; // Update with the actual path to the next level
+      window.location.href = '/levels/level3/level3.html'; // Update with the actual path to the next level
     });
 
     // Optionally, you can add more win logic here, such as moving to the next level
@@ -316,7 +327,7 @@ class Level2 extends Phaser.Scene {
     // Add to score
     score += 1;
     player1Score += 1;
-    player1ScoreText.setText('Player1 Score: ' + player1Score);
+    player1ScoreText.setText('BlazeBoy Score: ' + player1Score);
     scoreText.setText('Score: ' + score);
   }
 
@@ -326,7 +337,7 @@ class Level2 extends Phaser.Scene {
     // Add to player2 score
     score += 1;
     player2Score += 1;
-    player2ScoreText.setText('Player2 Score: ' + player2Score);
+    player2ScoreText.setText('WaterGirl Score: ' + player2Score);
     scoreText.setText('Score: ' + score);
   }
 }
