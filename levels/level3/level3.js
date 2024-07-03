@@ -341,7 +341,7 @@ class level3 extends Phaser.Scene {
   }
 
   winGame() {
-    this.add.text(250, 250, 'You Finished The Game!', { fontSize: '64px', fill: '#1219E3', fontStyle: 'bold' });
+    this.add.text(130, 250, 'You Finished The Game!', { fontSize: '64px', fill: '#1219E3', fontStyle: 'bold' });
 
     // Display a link to the next level
 
