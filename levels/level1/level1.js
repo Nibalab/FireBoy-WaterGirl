@@ -19,9 +19,9 @@ let player2DoorZone;
 let player1ReachedDoor = false;
 let player2ReachedDoor = false;
 
-class Level2 extends Phaser.Scene {
+class Level1 extends Phaser.Scene {
   constructor() {
-    super('Level2');
+    super('Level1');
   }
 
   preload() {
@@ -34,7 +34,6 @@ class Level2 extends Phaser.Scene {
     if (drawing2) {
       this.load.image('character2', drawing2);
     }
-    // this.load.image('character', '../../assets/charfire.png'); // Ensure this path is correct
 
     this.load.image('collectible', '../../assets/fireCollectible.png'); // Load the collectible image
     this.load.image('player2Collectible', '../../assets/waterCollectible.png'); // Load the player2 collectible image
@@ -83,14 +82,14 @@ class Level2 extends Phaser.Scene {
       fill: '#000',
       fontStyle: 'bold',
     });
-    player1ScoreText = this.add.text(250, 0, 'GlazeBoy: 0', {
+    player1ScoreText = this.add.text(250, 0, 'BlazeBoy: 0', {
       fontSize: '25px',
-      fill: '#000',
+      fill: '#E31D12',
       fontStyle: 'bold',
     });
     player2ScoreText = this.add.text(550, 0, 'AquaGirl: 0', {
       fontSize: '25px',
-      fill: '#000',
+      fill: '#1219E3',
       fontStyle: 'bold',
     });
 
@@ -224,7 +223,7 @@ class Level2 extends Phaser.Scene {
     const graphicsmale = this.add.graphics();
     const graphicsfemale = this.add.graphics();
     graphicsfemale.fillStyle(0x1219e3, 1);
-    graphicsmale.fillStyle(0xe31d12, 1); // Dim gray color for the doors
+    graphicsmale.fillStyle(0xe31d12, 1);
     graphicsmale.fillRect(600, 40, 40, 60); // Male exit
     graphicsfemale.fillRect(700, 40, 40, 60); // Female exit
 
@@ -237,14 +236,6 @@ class Level2 extends Phaser.Scene {
     // Create a general losing area
     losingArea = this.add.rectangle(365, 595, 90, 15, 0x000000);
     this.physics.add.existing(losingArea, true); // Add physics to the losing area
-
-    // // Create losing area for player1
-    // losingAreaPlayer1 = this.add.rectangle(200, 280, 5, 80, 0x0000ff); // Position and size accordingly
-    // this.physics.add.existing(losingAreaPlayer1, true);
-
-    // // Create losing area for player2
-    // losingAreaPlayer2 = this.add.rectangle(200, 180, 5, 100, 0xff0000); // Position and size accordingly
-    // this.physics.add.existing(losingAreaPlayer2, true);
   }
 
   handleLose(player, losingArea) {
@@ -318,7 +309,7 @@ class Level2 extends Phaser.Scene {
         data.y,
         'player2Collectible'
       );
-      player2Collectible.setScale(0.5); // Adjust scale if necessary
+      player2Collectible.setScale(0.5);
     });
   }
 
@@ -337,14 +328,14 @@ class Level2 extends Phaser.Scene {
   reachDoor1(player, doorZone) {
     player1ReachedDoor = true;
     player.setVelocity(0); // Stop player
-    player.setTint(0x00ff00); // Optional: change player color to indicate door reached
+    player.setTint(0x00ff00);
     this.checkWinCondition();
   }
 
   reachDoor2(player2, doorZone) {
     player2ReachedDoor = true;
     player2.setVelocity(0); // Stop player2
-    player2.setTint(0x00ff00); // Optional: change player2 color to indicate door reached
+    player2.setTint(0x00ff00);
     this.checkWinCondition();
   }
 
@@ -365,7 +356,7 @@ class Level2 extends Phaser.Scene {
     const nextLevelText = this.add.text(
       150,
       320,
-      'Continue to the :Next Level',
+      'Continue to the: Next Level',
       {
         fontSize: '32px',
         fill: '#E31D12',
@@ -374,10 +365,8 @@ class Level2 extends Phaser.Scene {
     );
     nextLevelText.setInteractive({ useHandCursor: true });
     nextLevelText.on('pointerdown', () => {
-      window.location.href = '/levels/level2/level2.hml'; // Update with the actual path to the next level
+      window.location.href = '/levels/level2/level2.html';
     });
-
-    // Optionally, you can add more win logic here, such as moving to the next level
   }
 
   collectCollectible(player, collectible) {
@@ -386,7 +375,7 @@ class Level2 extends Phaser.Scene {
     // Add to score
     score += 1;
     player1Score += 1;
-    player1ScoreText.setText('GlazeBoy: ' + player1Score);
+    player1ScoreText.setText('BlazeBoy: ' + player1Score);
     scoreText.setText('Score: '+score);
   }
 
@@ -406,11 +395,11 @@ const config = {
   width: 800,
   height: 600,
   parent: 'game-container',
-  scene: Level2,
+  scene: Level1,
   physics: {
     default: 'arcade',
     arcade: {
-      gravity: { y: 300 }, // Increase gravity for better jumping feel
+      gravity: { y: 300 },
     },
   },
 };

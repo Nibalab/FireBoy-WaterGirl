@@ -30,7 +30,7 @@ class level3 extends Phaser.Scene {
   preload() {
     let drawing1 = localStorage.getItem('character1');
     let drawing2 = localStorage.getItem('character2');
-  
+
     if (drawing1) {
       this.load.image('character1', drawing1);
     }
@@ -39,9 +39,8 @@ class level3 extends Phaser.Scene {
     }
     this.load.image('collectible', '../../assets/fireCollectible.png');
     this.load.image('player2Collectible', '../../assets/waterCollectible.png');
-    this.load.image('button', '../../assets/blue_girl_character.png'); // Add this line to load the button image
   }
-  
+
 
   create() {
     this.createBrickWall();
@@ -57,7 +56,7 @@ class level3 extends Phaser.Scene {
     player2.setBounce(0.2);
     player2.setCollideWorldBounds(true);
 
-    
+
     // Add player collision with platforms
     this.physics.add.collider(player, platforms);
     this.physics.add.collider(player2, platforms);
@@ -96,7 +95,7 @@ class level3 extends Phaser.Scene {
     // Set up overlap between players and door zones
     this.physics.add.overlap(player, player1DoorZone, this.reachDoor1, null, this);
     this.physics.add.overlap(player2, player2DoorZone, this.reachDoor2, null, this);
-    
+
   }
 
   update() {
@@ -187,7 +186,7 @@ class level3 extends Phaser.Scene {
     const graphicsmale = this.add.graphics();
     const graphicsfemale = this.add.graphics();
     graphicsfemale.fillStyle(0x1219e3, 1);
-    graphicsmale.fillStyle(0xe31d12, 1); // Dim gray color for the doors
+    graphicsmale.fillStyle(0xe31d12, 1);
     graphicsmale.fillRect(10, 40, 40, 60); // Male exit
     graphicsfemale.fillRect(100, 40, 40, 60); // Female exit
 
@@ -221,40 +220,17 @@ class level3 extends Phaser.Scene {
   }
 
   handleLose(player, losingArea) {
-    // Handle what happens when either player loses in the general losing area
-    backToLevels();
-  }
-  handleLose(player2, losingArea) {
-    // Handle what happens when either player loses in the general losing area
-    backToLevels();
-  }
-  handleLose(player, losingArea2){
-    // Handle what happens when either player loses in the general losing area
-    backToLevels();
-  }
-  handleLose(player2, losingArea2) {
-    // Handle what happens when either player loses in the general losing area
     backToLevels();
   }
 
   handleLosePlayer1(player, losingAreaPlayer1) {
-    // Handle what happens when player1 loses in their specific losing area
     backToLevels();
   }
 
   handleLosePlayer2(player2, losingAreaPlayer2) {
-    // Handle what happens when player2 loses in their specific losing area
-    backToLevels();
-  }
-  handleLosePlayer1(player, losingArea2Player1) {
-    // Handle what happens when player1 loses in their specific losing area
     backToLevels();
   }
 
-  handleLosePlayer2(player2, losingArea2Player2) {
-    // Handle what happens when player2 loses in their specific losing area
-    backToLevels();
-  }
 
   createBrickWall() {
     const brickWidth = 50;
@@ -286,7 +262,7 @@ class level3 extends Phaser.Scene {
     // Create collectibles at the specified positions
     collectibleData.forEach((data) => {
       let collectible = collectibles.create(data.x, data.y, 'collectible');
-      collectible.setScale(0.5); // Adjust scale if necessary
+      collectible.setScale(0.5);
     });
   }
 
@@ -323,14 +299,14 @@ class level3 extends Phaser.Scene {
   reachDoor1(player, doorZone) {
     player1ReachedDoor = true;
     player.setVelocity(0); // Stop player
-    player.setTint(0x00ff00); // Optional: change player color to indicate door reached
+    player.setTint(0x00ff00);
     this.checkWinCondition();
   }
 
   reachDoor2(player2, doorZone) {
     player2ReachedDoor = true;
     player2.setVelocity(0); // Stop player2
-    player2.setTint(0x00ff00); // Optional: change player2 color to indicate door reached
+    player2.setTint(0x00ff00);
     this.checkWinCondition();
   }
 
@@ -342,11 +318,6 @@ class level3 extends Phaser.Scene {
 
   winGame() {
     this.add.text(130, 250, 'You Finished The Game!', { fontSize: '64px', fill: '#1219E3', fontStyle: 'bold' });
-
-    // Display a link to the next level
-
-
-    // Optionally, you can add more win logic here, such as moving to the next level
   }
 
   collectCollectible(player, collectible) {
@@ -379,7 +350,7 @@ const config = {
   physics: {
     default: 'arcade',
     arcade: {
-      gravity: { y: 300 }, // Increase gravity for better jumping feel
+      gravity: { y: 300 },
     },
   },
 };
