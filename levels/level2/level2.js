@@ -80,8 +80,8 @@ class Level2 extends Phaser.Scene {
 
     // Add score text
     scoreText = this.add.text(0, 0, 'Score: 0', { fontSize: '25px', fill: '#000', fontStyle: 'bold' });
-    player1ScoreText = this.add.text(250, 0, 'Player1 Score: 0', { fontSize: '25px', fill: '#000', fontStyle: 'bold' });
-    player2ScoreText = this.add.text(550, 0, 'Player2 Score: 0', { fontSize: '25px', fill: '#000', fontStyle: 'bold' });
+    player1ScoreText = this.add.text(230, 0, 'BlazeBoy Score: 0', { fontSize: '25px', fill: '#E31D12', fontStyle: 'bold' });
+    player2ScoreText = this.add.text(520, 0, 'WaterGirl Score: 0', { fontSize: '25px', fill: '#1219E3', fontStyle: 'bold' });
 
     // Set up overlap between players and collectibles
     this.physics.add.overlap(player, collectibles, this.collectCollectible, null, this);
@@ -327,7 +327,7 @@ class Level2 extends Phaser.Scene {
     // Add to score
     score += 1;
     player1Score += 1;
-    player1ScoreText.setText('Player1 Score: ' + player1Score);
+    player1ScoreText.setText('BlazeBoy Score: ' + player1Score);
     scoreText.setText('Score: ' + score);
   }
 
@@ -337,7 +337,7 @@ class Level2 extends Phaser.Scene {
     // Add to player2 score
     score += 1;
     player2Score += 1;
-    player2ScoreText.setText('Player2 Score: ' + player2Score);
+    player2ScoreText.setText('WaterGirl Score: ' + player2Score);
     scoreText.setText('Score: ' + score);
   }
 }
