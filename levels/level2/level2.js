@@ -4,6 +4,8 @@ let platforms;
 let cursors;
 let wad;
 let losingArea;
+let losingAreaPlayer1;
+let losingAreaPlayer2;
 let collectibles;
 let player2Collectibles;
 let score = 0;
@@ -23,18 +25,27 @@ class Level2 extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image('character', '../../assets/charfire.png'); // Ensure this path is correct
-    this.load.image('collectible', '../../assets/fireCollectible.png'); // Load the collectible image
-    this.load.image('player2Collectible', '../../assets/waterCollectible.png'); // Load the player2 collectible image
-    this.load.image('character2', '../../assets/blue_girl_character.png'); // Ensure this path is correct
+    let drawing1 = localStorage.getItem('character1');
+    let drawing2 = localStorage.getItem('character2');
+  
+    if (drawing1) {
+      this.load.image('character1', drawing1);
+    }
+    if (drawing2) {
+      this.load.image('character2', drawing2);
+    }
+    this.load.image('collectible', '../../assets/fireCollectible.png');
+    this.load.image('player2Collectible', '../../assets/waterCollectible.png');
+    this.load.image('button', '../../assets/blue_girl_character.png'); // Add this line to load the button image
   }
+  
 
   create() {
     this.createBrickWall();
     this.createRoads();
 
     // First Character
-    player = this.physics.add.sprite(40, 550, 'character');
+    player = this.physics.add.sprite(40, 550, 'character1');
     player.setBounce(0.2);
     player.setCollideWorldBounds(true);
 
@@ -43,6 +54,7 @@ class Level2 extends Phaser.Scene {
     player2.setBounce(0.2);
     player2.setCollideWorldBounds(true);
 
+    
     // Add player collision with platforms
     this.physics.add.collider(player, platforms);
     this.physics.add.collider(player2, platforms);
@@ -58,7 +70,7 @@ class Level2 extends Phaser.Scene {
     };
 
     // Create the losing area
-    this.createLosingArea();
+    this.createLosingAreas();
 
     // Create collectibles
     this.createCollectibles();
@@ -68,8 +80,8 @@ class Level2 extends Phaser.Scene {
 
     // Add score text
     scoreText = this.add.text(0, 0, 'Score: 0', { fontSize: '25px', fill: '#000', fontStyle: 'bold' });
-    player1ScoreText = this.add.text(250, 0, 'Player1 Score: 0', { fontSize: '25px', fill: '#000', fontStyle: 'bold' });
-    player2ScoreText = this.add.text(550, 0, 'Player2 Score: 0', { fontSize: '25px', fill: '#000', fontStyle: 'bold' });
+    player1ScoreText = this.add.text(230, 0, 'BlazeBoy Score: 0', { fontSize: '25px', fill: '#E31D12', fontStyle: 'bold' });
+    player2ScoreText = this.add.text(520, 0, 'WaterGirl Score: 0', { fontSize: '25px', fill: '#1219E3', fontStyle: 'bold' });
 
     // Set up overlap between players and collectibles
     this.physics.add.overlap(player, collectibles, this.collectCollectible, null, this);
@@ -81,6 +93,7 @@ class Level2 extends Phaser.Scene {
     // Set up overlap between players and door zones
     this.physics.add.overlap(player, player1DoorZone, this.reachDoor1, null, this);
     this.physics.add.overlap(player2, player2DoorZone, this.reachDoor2, null, this);
+    
   }
 
   update() {
@@ -118,9 +131,11 @@ class Level2 extends Phaser.Scene {
       player2.setVelocityX(0); // Stop
     }
 
-    // Check for collision with the losing area
+    // Check for collision with the losing areas
     this.physics.add.overlap(player, losingArea, this.handleLose, null, this);
     this.physics.add.overlap(player2, losingArea, this.handleLose, null, this);
+    this.physics.add.overlap(player, losingAreaPlayer1, this.handleLosePlayer1, null, this);
+    this.physics.add.overlap(player2, losingAreaPlayer2, this.handleLosePlayer2, null, this);
   }
 
   createRoads() {
@@ -172,14 +187,36 @@ class Level2 extends Phaser.Scene {
     this.add.text(110, 60, '♀', { fontSize: '28px', fill: '#FFFFFF' });
   }
 
-  createLosingArea() {
-    // Create a losing area (e.g., a red zone at the bottom of the screen)
-    losingArea = this.add.rectangle(365, 595, 90, 15, 0xff0000);
+  createLosingAreas() {
+    // Create a general losing area
+    losingArea = this.add.rectangle(365, 595, 90, 15, 0x000000);
     this.physics.add.existing(losingArea, true); // Add physics to the losing area
+
+    // Create losing area for player1
+    losingAreaPlayer1 = this.add.rectangle(200, 280, 5, 80, 0x0000FF); // Position and size accordingly
+    this.physics.add.existing(losingAreaPlayer1, true);
+
+    // Create losing area for player2
+    losingAreaPlayer2 = this.add.rectangle(200, 180, 5, 100, 0xff0000); // Position and size accordingly
+    this.physics.add.existing(losingAreaPlayer2, true);
   }
 
   handleLose(player, losingArea) {
-    // Handle what happens when the player loses
+    // Handle what happens when either player loses in the general losing area
+    backToLevels();
+  }
+  handleLose(player2, losingArea) {
+    // Handle what happens when either player loses in the general losing area
+    backToLevels();
+  }
+
+  handleLosePlayer1(player, losingAreaPlayer1) {
+    // Handle what happens when player1 loses in their specific losing area
+    backToLevels();
+  }
+
+  handleLosePlayer2(player2, losingAreaPlayer2) {
+    // Handle what happens when player2 loses in their specific losing area
     backToLevels();
   }
 
@@ -262,7 +299,7 @@ class Level2 extends Phaser.Scene {
   }
 
   checkWinCondition() {
-    if (player1ReachedDoor || player2ReachedDoor) {
+    if (player1ReachedDoor && player2ReachedDoor) {
       this.winGame();
     }
   }
@@ -278,7 +315,7 @@ class Level2 extends Phaser.Scene {
     });
     nextLevelText.setInteractive({ useHandCursor: true });
     nextLevelText.on('pointerdown', () => {
-      window.location.href = '/levels/level3/level3.js'; // Update with the actual path to the next level
+      window.location.href = '/levels/level3/level3.html'; // Update with the actual path to the next level
     });
 
     // Optionally, you can add more win logic here, such as moving to the next level
@@ -290,7 +327,7 @@ class Level2 extends Phaser.Scene {
     // Add to score
     score += 1;
     player1Score += 1;
-    player1ScoreText.setText('Player1 Score: ' + player1Score);
+    player1ScoreText.setText('BlazeBoy Score: ' + player1Score);
     scoreText.setText('Score: ' + score);
   }
 
@@ -300,7 +337,7 @@ class Level2 extends Phaser.Scene {
     // Add to player2 score
     score += 1;
     player2Score += 1;
-    player2ScoreText.setText('Player2 Score: ' + player2Score);
+    player2ScoreText.setText('WaterGirl Score: ' + player2Score);
     scoreText.setText('Score: ' + score);
   }
 }

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Draw Characters</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+    <link rel="stylesheet" href="draw.css">
+  </head>
+  <body>
+    <h1>Draw Your Characters</h1>
+    <div class="canvas-container">
+      <div class="canvas-wrapper">
+        <h3 style="color: rgb(136, 5, 5);">GlazeBoy</h3>
+        <div id="canvas1"></div>
+        <button class="clear-button" onclick="clearDrawing(1)">Clear Drawing</button>
+      </div>
+      <div class="canvas-wrapper">
+        <h3 style="color: rgb(0, 0, 79);">AquaGirl</h3>
+        <div id="canvas2"></div>
+        <button class="clear-button" onclick="clearDrawing(2)">Clear Drawing</button>
+      </div>
+    </div>
+    <a class="button" onclick="saveDrawings()">Save and Continue</a>
+
+    <script src="draw.js"></script>
+  </body>
+</html>

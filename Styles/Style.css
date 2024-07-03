@@ -75,7 +75,7 @@ section img#mountains_front {
   margin-bottom: 9%;
 }
 
-#btn {
+.button {
   margin-top: 4%;
   display: flex;
   align-items: center;
