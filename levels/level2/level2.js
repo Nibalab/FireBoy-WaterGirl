@@ -315,7 +315,7 @@ class Level2 extends Phaser.Scene {
     });
     nextLevelText.setInteractive({ useHandCursor: true });
     nextLevelText.on('pointerdown', () => {
-      window.location.href = '/levels/level3/level3.js'; // Update with the actual path to the next level
+      window.location.href = '/levels/level3/level3.html'; // Update with the actual path to the next level
     });
 
     // Optionally, you can add more win logic here, such as moving to the next level
