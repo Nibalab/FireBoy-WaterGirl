@@ -138,10 +138,10 @@ class level3 extends Phaser.Scene {
     this.physics.add.overlap(player2, losingArea, this.handleLose, null, this);
     this.physics.add.overlap(player, losingArea2, this.handleLose, null, this);
     this.physics.add.overlap(player2, losingArea2, this.handleLose, null, this);
-    this.physics.add.overlap(player, losingAreaPlayer1, this.handleLosePlayer1, null, this);
-    this.physics.add.overlap(player2, losingAreaPlayer2, this.handleLosePlayer2, null, this);
-    this.physics.add.overlap(player, losingArea2Player1, this.handleLosePlayer1, null, this);
-    this.physics.add.overlap(player2, losingArea2Player2, this.handleLosePlayer2, null, this);
+    this.physics.add.overlap(player, losingAreaPlayer1, this.handleLose, null, this);
+    this.physics.add.overlap(player2, losingAreaPlayer2, this.handleLose, null, this);
+    this.physics.add.overlap(player, losingArea2Player1, this.handleLose, null, this);
+    this.physics.add.overlap(player2, losingArea2Player2, this.handleLose, null, this);
   }
 
   createRoads() {
@@ -223,13 +223,6 @@ class level3 extends Phaser.Scene {
     backToLevels();
   }
 
-  handleLosePlayer1(player, losingAreaPlayer1) {
-    backToLevels();
-  }
-
-  handleLosePlayer2(player2, losingAreaPlayer2) {
-    backToLevels();
-  }
 
 
   createBrickWall() {

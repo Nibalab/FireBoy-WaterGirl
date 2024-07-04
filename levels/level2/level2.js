@@ -36,7 +36,6 @@ class Level2 extends Phaser.Scene {
     }
     this.load.image('collectible', '../../assets/fireCollectible.png');
     this.load.image('player2Collectible', '../../assets/waterCollectible.png');
-    this.load.image('button', '../../assets/blue_girl_character.png'); // Add this line to load the button image
   }
 
 
@@ -134,8 +133,8 @@ class Level2 extends Phaser.Scene {
     // Check for collision with the losing areas
     this.physics.add.overlap(player, losingArea, this.handleLose, null, this);
     this.physics.add.overlap(player2, losingArea, this.handleLose, null, this);
-    this.physics.add.overlap(player, losingAreaPlayer1, this.handleLosePlayer1, null, this);
-    this.physics.add.overlap(player2, losingAreaPlayer2, this.handleLosePlayer2, null, this);
+    this.physics.add.overlap(player, losingAreaPlayer1, this.handleLose, null, this);
+    this.physics.add.overlap(player2, losingAreaPlayer2, this.handleLose, null, this);
   }
 
   createRoads() {
@@ -206,13 +205,7 @@ class Level2 extends Phaser.Scene {
   }
 
 
-  handleLosePlayer1(player, losingAreaPlayer1) {
-    backToLevels();
-  }
 
-  handleLosePlayer2(player2, losingAreaPlayer2) {
-    backToLevels();
-  }
 
   createBrickWall() {
     const brickWidth = 50;

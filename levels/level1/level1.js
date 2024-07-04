@@ -239,23 +239,10 @@ class Level1 extends Phaser.Scene {
   }
 
   handleLose(player, losingArea) {
-    // Handle what happens when either player loses in the general losing area
-    backToLevels();
-  }
-  handleLose(player2, losingArea) {
-    // Handle what happens when either player loses in the general losing area
     backToLevels();
   }
 
-  handleLosePlayer1(player, losingAreaPlayer1) {
-    // Handle what happens when player1 loses in their specific losing area
-    backToLevels();
-  }
 
-  handleLosePlayer2(player2, losingAreaPlayer2) {
-    // Handle what happens when player2 loses in their specific losing area
-    backToLevels();
-  }
 
   createBrickWall() {
     const brickWidth = 50;
